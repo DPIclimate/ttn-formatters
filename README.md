@@ -9,4 +9,3 @@ The following apps have active devices but no uplink formatters. This means ubid
 - pri-dpi-stop
 - soil-ict-enviropro40cm
 - stoneleigh-elsys
-- temphumid-rhf-1s001
