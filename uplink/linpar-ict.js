@@ -17,7 +17,10 @@ function Bytes2Float32(bytes) {
     return sign * significand * Math.pow(2, exponent);
 }
 
-function Decoder(bytes, port) {
+function decodeUplink(input) {
+    var bytes = input.bytes;
+    var port = input.fPort;
+
     byte = 0;
     header = 0;
     var decoded = {};
@@ -62,5 +65,8 @@ function Decoder(bytes, port) {
             str: String.fromCharCode.apply(String, bytes)
         };
     }
-    return decoded;
+    
+    return {
+        data: decoded
+    };
 }

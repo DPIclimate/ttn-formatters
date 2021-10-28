@@ -31,6 +31,12 @@ function readInt16LE(payload, offset) {
 
 // RisingHF Temp Humid loggers	
 function decodeUplink(input) {
+    if (input.fPort !== 8) {
+        return {
+            warnings: ["Port is " + input.fPort + ", not a telemetry message."]
+        }
+    }
+
     var payload = input.bytes;
 
     var temperature = readInt16LE(payload, 1); // payload.slice(1, 3).readInt16LE();
