@@ -16,22 +16,39 @@ function Bytes2Float32(bytes) {
     return sign * significand * Math.pow(2, exponent);
 }
 
-function Decoder(bytes, port) {
-  var decoded = {};
-  decoded.RTC = (bytes[0]<<24 | bytes[1]<<16 | bytes[2]<<8 | bytes [3]);
-  decoded.battery = ((bytes[4]<<8 | bytes[5])/1000);
-  decoded.solarPanel = ((bytes[6]<<8 | bytes[7])/1000);
-  decoded.command = (bytes[9]);
-  
-  decoded.solar = (Math.round(Bytes2Float32(bytes[10]<<24 | bytes[11]<<16 | bytes[12]<<8 | bytes[13]<<0)*100)/100);
-  decoded.precipitation = (Math.round(Bytes2Float32(bytes[14]<<24 | bytes[15]<<16 | bytes[16]<<8 | bytes[17]<<0)*100)/100);
-  decoded.strikes = (Math.round(Bytes2Float32(bytes[18]<<24 | bytes[19]<<16 | bytes[20]<<8 | bytes[21]<<0)*100)/100);
-  decoded.windSpeed = (Math.round(Bytes2Float32(bytes[22]<<24 | bytes[23]<<16 | bytes[24]<<8 | bytes[25]<<0)*100)/100);
-  decoded.windDirection = (Math.round(Bytes2Float32(bytes[26]<<24 | bytes[27]<<16 | bytes[28]<<8 | bytes[29]<<0)*100)/100);
-  decoded.gustSpeed = (Math.round(Bytes2Float32(bytes[30]<<24 | bytes[31]<<16 | bytes[32]<<8 | bytes[33]<<0)*100)/100);
-  decoded.airTemperature = (Math.round(Bytes2Float32(bytes[34]<<24 | bytes[35]<<16 | bytes[36]<<8 | bytes[37]<<0)*100)/100);
-  decoded.vapourPressure = (Math.round(Bytes2Float32(bytes[38]<<24 | bytes[39]<<16 | bytes[40]<<8 | bytes[41]<<0)*1000)); 			//vaporPress(hPa)
-  decoded.atmosphericPressure = (Math.round(Bytes2Float32(bytes[42]<<24 | bytes[43]<<16 | bytes[44]<<8 | bytes[45]<<0)*1000)/100);	//atmosPres(hPa)
-  decoded.relativeHumidity = (Math.round(Bytes2Float32(bytes[46]<<24 | bytes[47]<<16 | bytes[48]<<8 | bytes[49]<<0)*100));
- return decoded;
+
+function decodeUplink(bytes, port) {
+	var payload = input.bytes;
+	var RTC = (payload[0]<<24 | payload[1]<<16 | payload[2]<<8 | payload [3]);
+	var battery = ((payload[6]<<8 | payload[7])/1000);
+	var command = (payload[9]);
+	var solar = (Math.round(Bytes2Float32(payload[10]<<24 | payload[11]<<16 | payload[12]<<8 | payload[13]<<0)*100)/100);
+	var precipitation = (Math.round(Bytes2Float32(payload[14]<<24 | payload[15]<<16 | payload[16]<<8 | payload[17]<<0)*100)/100);
+	var strikes = (Math.round(Bytes2Float32(payload[18]<<24 | payload[19]<<16 | payload[20]<<8 | payload[21]<<0)*100)/100);
+	var windSpeed = (Math.round(Bytes2Float32(payload[22]<<24 | payload[23]<<16 | payload[24]<<8 | payload[25]<<0)*100)/100);
+	var windDirection = (Math.round(Bytes2Float32(payload[26]<<24 | payload[27]<<16 | payload[28]<<8 | payload[29]<<0)*100)/100);
+	var gustSpeed = (Math.round(Bytes2Float32(payload[30]<<24 | payload[31]<<16 | payload[32]<<8 | payload[33]<<0)*100)/100);
+	var airTemperature = (Math.round(Bytes2Float32(payload[34]<<24 | payload[35]<<16 | payload[36]<<8 | payload[37]<<0)*100)/100);
+	var vapourPressure = (Math.round(Bytes2Float32(payload[38]<<24 | payload[39]<<16 | payload[40]<<8 | payload[41]<<0)*1000)); 			//vaporPress(hPa)
+	var atmosphericPressure = (Math.round(Bytes2Float32(payload[42]<<24 | payload[43]<<16 | payload[44]<<8 | payload[45]<<0)*1000)/100);	//atmosPres(hPa)
+	var relativeHumidity = (Math.round(Bytes2Float32(payload[46]<<24 | payload[47]<<16 | payload[48]<<8 | payload[49]<<0)*100));
+
+	return {
+		data: {
+			"rtc": RTC,
+			"battery": battery,
+			"command": command,
+			"solarpanel": solar,
+			"precipitation": precipitation, 
+			"strikes": strikes,
+			"windspeed": windSpeed,
+			"winddirection": windDirection,
+			"gustspeed": gustSpeed,
+			"airtemperature": airTemperature,
+			"vapourpressure": vapourPressure, 
+			"atmosphericpressure": atmosphericPressure,
+			"relativehumidity": relativeHumidity
+		}
+	};
 }
+
