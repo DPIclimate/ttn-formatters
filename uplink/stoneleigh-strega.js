@@ -1,3 +1,14 @@
+function decodeUplink(input) {
+  var bytes = input.bytes;
+  var port = input.fPort;
+  var data = Decoder(bytes, port);
+  if (data != null) {
+    return {
+      "data": data
+    };
+  }
+}
+
 function Decoder(bytes, port) {
   var ports    = port;
   var v4       = toHexString(bytes);

@@ -94,6 +94,18 @@ function parseDeviceMsg(buf, lMsg){
 }
 
 //Function - Decoder, Wraps the primary decoder function for TTNv3
+function decodeUplink(input) {
+	var bytes = input.bytes;
+	var port = input.fPort;
+	var data = Decoder(bytes, port);
+	if (data != null) {
+		return {
+			"data": data
+		};
+	}
+}
+
+//Function - Decoder, Wraps the primary decoder function for TTNv2
 function Decoder(b, p){
 	var buf = new Buf(b);
 	var decoded = {};

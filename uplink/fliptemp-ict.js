@@ -29,8 +29,20 @@ function B2Fl(b){
 		exp=-126;
 		sig/=(1<<22);
 	} else sig=(sig|(1<<23))/(1<<23);
-	return sign*sig*Math.pow(2,exp);}
+	return sign*sig*Math.pow(2,exp);
+}
 
+function decodeUplink(input) {
+	var bytes = input.bytes;
+	var port = input.fPort;
+	var data = Decoder(bytes, port);
+	if (data != null) {
+		return {
+		"data": data
+		};
+	}
+}
+	  
 /*Function Decoder(bytes, port)
 	Purpose: Main Entry point of TTN Console Decoder
 	Args:	bytes - An array of bytes from LoRaWan raw payload(Hex Represented)
