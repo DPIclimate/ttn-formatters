@@ -30,7 +30,8 @@ function decodeUplink(bytes, port) {
 		var moisture8 = (Math.round(Bytes2Float32(payload[38]<<24 | payload[39]<<16 | payload[40]<<8 | payload[41]<<0)*100)/100);
 		return {
 			data: {
-				"rtc": RTC,
+				"RTC": RTC,
+                                "batmv": batmv,
 				"solmv": solmv,
 				"command": command,
 				"moisture1": moisture1,
@@ -54,7 +55,8 @@ function decodeUplink(bytes, port) {
 		var temperature8 = (Math.round(Bytes2Float32(payload[38]<<24 | payload[39]<<16 | payload[40]<<8 | payload[41]<<0)*100)/100);
 		return {
 			data: {
-				"rtc": RTC,
+				"RTC": RTC,
+                                "batmv": batmv,
 				"solmv": solmv,
 				"command": command,
 				"temperature1": temperature1,
