@@ -1,6 +1,6 @@
-// TODO handle daylight savings
+// TODO handle non-daylight savings
 function unix_to_AU_datetime(unixTimeStamp) {
-	localUnixTime = (unixTimeStamp + (3600 * 10)) * 1000; // UTC+10:00
+	localUnixTime = (unixTimeStamp + (3600 * 11)) * 1000; // UTC+11:00
 	let date = new Date(localUnixTime);
 	return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear() + ' ' + ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
 }
@@ -31,10 +31,10 @@ function decodeUplink(input) {
 		var maxWeight = (input.bytes[25] | (input.bytes[26] << 8)) / 100.0;
 		return {
 			data: {
-				"bytes": input.bytes,
-				"HEX": bytes_to_hex(input.bytes),
+				//"bytes": input.bytes,
+				//"HEX": bytes_to_hex(input.bytes),
 				"UNIX_time": unixTime,
-				"Local_time": dateTime,
+				//"Local_time": dateTime,
 				"Scale_ID": scaleID,
 				"Start_weight": startWeight,
 				"Middle_weight": middleWeight,
@@ -63,10 +63,10 @@ function decodeUplink(input) {
 		var temperature = (input.bytes[17] | (input.bytes[18] << 8)) / 100.0;
 		return {
 			data: {
-				"bytes": input.bytes,
-				"HEX": bytes_to_hex(input.bytes),
+				//"bytes": input.bytes,
+				//"HEX": bytes_to_hex(input.bytes),
 				"UNIX_time": unixTime,
-				"Local_time": dateTime,
+				//"Local_time": dateTime,
 				"Battery (V)": batteryV,
 				"Battery (A)": batteryA,
 				"Battery (W)": batteryW,
